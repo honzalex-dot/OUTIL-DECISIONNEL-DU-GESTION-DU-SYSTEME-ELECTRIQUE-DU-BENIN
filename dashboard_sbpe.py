@@ -299,4 +299,28 @@ with col_tcn:
     st.write("Réserve :", round(RES_TCN,1), "MW")
     st.write("Délestage :", round(delestage_tcn,1), "MW")
 
+
 st.markdown("<br>", unsafe_allow_html=True)
+
+# ==========================================================
+# 6️⃣ GRAPHIQUE 24H
+# ==========================================================
+
+fig = go.Figure()
+
+fig.add_trace(go.Bar(x=input_data["Heure"], y=input_data["MG1 VRA"], name="MG1 VRA"))
+fig.add_trace(go.Bar(x=input_data["Heure"], y=input_data["MG1 TCN"], name="MG1 TCN"))
+fig.add_trace(go.Bar(x=input_data["Heure"], y=input_data["PARAS"], name="PARAS"))
+fig.add_trace(go.Bar(x=input_data["Heure"], y=input_data["TRANSCORP"], name="TRANSCORP"))
+fig.add_trace(go.Bar(x=input_data["Heure"], y=input_data["SOLAIRE"], name="Solaire"))
+
+fig.add_trace(go.Scatter(
+    x=input_data["Heure"],
+    y=input_data["Charge_horaire"],
+    mode="lines+markers",
+    name="Charge"
+))
+
+fig.update_layout(barmode="stack", template="plotly_white")
+
+st.plotly_chart(fig, use_container_width=True)
